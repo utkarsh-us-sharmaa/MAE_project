@@ -16,15 +16,36 @@ function TDTR_MAIN_V4(lambda, output_file_prefix)
     %  9 layer configuration Al for inhomogenous 9 layers
 
     % lambda=[140 0.06 56.8889 73.7778 90.6667 107.5555 124.4444 0.1 10]; % thermal conductivity
-    C = [2.42 0.1 0.734*3.26 0.734*3.26 0.734*3.26 0.734*3.26 0.734*3.26 0.1 1.6]*1e6;% heat capacity
-    t=[25*6.4/2 1 80 80 80 80 80 1 1e9]*1e-9; % thickness
+    % % Heat capacity array (104 elements)    
+    % C = [2.42 0.1 repmat(0.734*3.26, 1, 100) 0.1 1.6]*1e6;
+
+    % % Thickness array (104 elements)
+    % t = [25*6.4/2 1 repmat(4, 1, 100) 1 1e9]*1e-9;
+
+    % % Isotropic layers array (104 elements)
+    % eta = ones(1, 104);
+
+    k_constant = 100;  % W/mK
+
+    % Heat capacity array (104 elements)    
+    C = [2.42 0.1 repmat(0.734*3.26, 1, 100) 0.1 1.6]*1e6;
+
+    % Thickness array (104 elements)
+    t = [25*6.4/2 1 repmat(4, 1, 100) 1 1e9]*1e-9;
+
+    % Isotropic layers array (104 elements)
+    eta = ones(1, 104);
+
+    % Thermal conductivity array (104 elements)
+    lambda = [140 0.06 repmat(k_constant, 1, 100) 0.1 140];
+    
     f=3.85*1e6; %laser Modulation frequency, Hz + various freq...
     % % % 
     timeshift=0; %time shift alignment
     % % % 
     r_pump=11.098*1e-6; %%%% 0.98
     % % % 
-    eta=[1 1 1 1 1 1 1 1 1]; %isotropic layers, eta=kx/ky;
+    % eta=[1 1 1 1 1 1 1 1 1]; %isotropic layers, eta=kx/ky;
 
     coherent_in_phase=0.15;
     coherent_out_phase=-4.3; %noise
